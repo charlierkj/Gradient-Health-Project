@@ -9,6 +9,7 @@ import tensorflow_datasets.public_api as tfds
 
 import os
 import zipfile
+import git
 
 import numpy as np
 
@@ -54,8 +55,13 @@ class CovidCt(tfds.core.GeneratorBasedBuilder):
     """Returns SplitGenerators."""
 
     #extracted_path = dl_manager.download_and_extract(_URL)
-    extracted_path = "/home/kejia/tmp/COVID-CT"
+    #extracted_path = "/home/kejia/tmp/COVID-CT"
+    gitpath = os.path.expanduser('~')
+    extracted_path = os.path.join(gitpath, "COVID-CT")
     print(extracted_path)
+    if not os.path.exists(extracted_path):
+        git.Git(gitpath).clone("https://github.com/UCSD-AI4H/COVID-CT.git")
+
     imgs_path = os.path.join(extracted_path, "Images-processed")
     label_path = os.path.join(extracted_path, "Data-split")
 
